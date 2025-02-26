@@ -19,8 +19,8 @@ export const HomeNavbar = () => {
               <Image
                 src="/logo.svg"
                 alt="Logo vid skool"
-                width={32}
-                height={32}
+                width={96}
+                height={96}
               />
               <p className="text-xl font-semibold tracking-tight">VidSkool</p>
             </div>
