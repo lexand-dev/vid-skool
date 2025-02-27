@@ -2,20 +2,23 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
 import { AuthClerkProvider } from "@/modules/auth/providers/auth-clerk-provider";
+
+import { TRPCProvider } from "@/trpc/client";
+
 import "./globals.css";
 
 const inter = Inter({
-	subsets: ["latin"],
+	subsets: ["latin"]
 });
 
 export const metadata: Metadata = {
 	title: "English Speaking Club",
 	description:
-		"English Speaking Club is a platform for English learners to practice speaking English with other learners.",
+		"English Speaking Club is a platform for English learners to practice speaking English with other learners."
 };
 
 export default function RootLayout({
-	children,
+	children
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
@@ -23,7 +26,7 @@ export default function RootLayout({
 		<AuthClerkProvider>
 			<html lang="en">
 				<body className={`${inter.className} ${inter.className} antialiased`}>
-					{children}
+					<TRPCProvider>{children}</TRPCProvider>
 				</body>
 			</html>
 		</AuthClerkProvider>
