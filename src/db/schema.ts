@@ -3,18 +3,30 @@ import {
 	text,
 	timestamp,
 	uniqueIndex,
-	uuid
+	uuid,
+	varchar
 } from "drizzle-orm/pg-core";
+
+import { timestamps } from "./columns.helpers";
 
 export const users = pgTable(
 	"users",
 	{
 		id: uuid("id").primaryKey().defaultRandom(),
-		clerkId: text("clerk_id").unique().notNull(),
-		name: text("name").notNull(),
-		imageUrl: text("image_url").notNull(),
-		createdAt: timestamp("created_at").defaultNow().notNull(),
-		updatedAt: timestamp("updated_at").defaultNow().notNull()
+		clerkId: varchar("clerk_id", { length: 255 }).unique().notNull(),
+		name: varchar("name", { length: 255 }).notNull(),
+		imageUrl: varchar("image_url", { length: 255 }).notNull(),
+		...timestamps
 	},
 	(t) => [uniqueIndex("clerk_id_idx").on(t.clerkId)]
+);
+
+export const categories = pgTable(
+	"categories",
+	{
+		id: uuid("id").primaryKey().defaultRandom(),
+		name: varchar("name", { length: 100 }).unique().notNull(),
+		...timestamps
+	},
+	(t) => [uniqueIndex("name_idx").on(t.name)]
 );
