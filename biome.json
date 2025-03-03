@@ -32,7 +32,9 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double",
-			"trailingCommas": "none"
+			"trailingCommas": "none",
+			"indentStyle": "space",
+			"indentWidth": 2
 		}
 	},
 	"json": {
