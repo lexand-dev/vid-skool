@@ -30,3 +30,19 @@ export const categories = pgTable(
 	},
 	(t) => [uniqueIndex("name_idx").on(t.name)]
 );
+
+export const videos = pgTable(
+	"videos",
+	{
+		id: uuid("id").primaryKey().defaultRandom(),
+		title: varchar("title", { length: 255 }).notNull(),
+		description: text("description"),
+		userId: uuid("user_id").references(() => users.id, {
+			onDelete: "cascade"
+		} ).notNull(),
+		categoryId: uuid("category_id").references(() => categories.id, {
+			onDelete: "set null"
+		}),
+		...timestamps
+	}
+);
