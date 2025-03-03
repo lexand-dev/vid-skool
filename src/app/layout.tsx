@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import { AuthClerkProvider } from "@/modules/auth/providers/auth-clerk-provider";
 
 import { TRPCProvider } from "@/trpc/client";
+import { Toaster } from "@/components/ui/sonner";
 
 import "./globals.css";
 
@@ -26,7 +27,10 @@ export default function RootLayout({
 		<AuthClerkProvider>
 			<html lang="en">
 				<body className={`${inter.className} ${inter.className} antialiased`}>
-					<TRPCProvider>{children}</TRPCProvider>
+					<TRPCProvider>
+						<Toaster />
+						{children}
+					</TRPCProvider>
 				</body>
 			</html>
 		</AuthClerkProvider>
