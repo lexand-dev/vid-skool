@@ -1,7 +1,6 @@
 import {
   pgTable,
   text,
-  timestamp,
   uniqueIndex,
   uuid,
   varchar
@@ -41,6 +40,7 @@ export const videos = pgTable("videos", {
   muxPlaybackId: text("mux_playback_id").unique(),
   muxTrackId: text("mux_track_id").unique(),
   muxTrackStatus: text("mux_track_status"),
+  thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
   userId: uuid("user_id")
     .references(() => users.id, {
       onDelete: "cascade"
