@@ -9,7 +9,7 @@ import { ResponsiveModal } from "@/components/responsive-modal";
 
 import { StudioUploader } from "./studio-uploader";
 
-const StudioUploadModal = () => {
+export const StudioUploadModal = () => {
   const utils = trpc.useUtils();
   const create = trpc.video.create.useMutation({
     onSuccess: () => {
@@ -54,5 +54,3 @@ const StudioUploadModal = () => {
     </>
   );
 };
-
-export default StudioUploadModal;
