@@ -1,4 +1,6 @@
 import {
+  integer,
+  pgEnum,
   pgTable,
   text,
   uniqueIndex,
@@ -30,6 +32,11 @@ export const categories = pgTable(
   (t) => [uniqueIndex("name_idx").on(t.name)]
 );
 
+export const videoVisibility = pgEnum("video_visibility", [
+  "public",
+  "private"
+]);
+
 export const videos = pgTable("videos", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: varchar("title", { length: 255 }).notNull(),
@@ -41,6 +48,9 @@ export const videos = pgTable("videos", {
   muxTrackId: text("mux_track_id").unique(),
   muxTrackStatus: text("mux_track_status"),
   thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
+  previewUrl: varchar("preview_url", { length: 255 }),
+  duration: integer("duration"),
+  visibility: videoVisibility("visibility").default("private").notNull(),
   userId: uuid("user_id")
     .references(() => users.id, {
       onDelete: "cascade"
