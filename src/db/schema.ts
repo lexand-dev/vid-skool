@@ -7,6 +7,11 @@ import {
   uuid,
   varchar
 } from "drizzle-orm/pg-core";
+import {
+  createInsertSchema,
+  createSelectSchema,
+  createUpdateSchema,
+ } from "drizzle-zod";
 
 import { timestamps } from "./columns.helpers";
 
@@ -61,3 +66,7 @@ export const videos = pgTable("videos", {
   }),
   ...timestamps
 });
+
+export const videoSelectSchema = createSelectSchema(videos);
+export const videoInsertSchema = createInsertSchema(videos);
+export const videoUpdateSchema = createUpdateSchema(videos);
