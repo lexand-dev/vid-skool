@@ -9,6 +9,6 @@ import { appRouter } from "./routers/_app";
 export const getQueryClient = cache(makeQueryClient);
 const caller = createCallerFactory(appRouter)(createTRPCContext);
 export const { trpc, HydrateClient } = createHydrationHelpers<typeof appRouter>(
-	caller,
-	getQueryClient
+  caller,
+  getQueryClient
 );
