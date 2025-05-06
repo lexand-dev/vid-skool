@@ -9,7 +9,7 @@ import { Suspense, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparkleIcon, TrashIcon } from "lucide-react";
+import { CopyCheckIcon, CopyIcon, Globe2Icon, ImagePlusIcon, Loader2Icon, LockIcon, MoreVerticalIcon, RotateCcwIcon, SparkleIcon, SparklesIcon, TrashIcon } from "lucide-react";
 
 import { trpc } from "@/trpc/client";
 import { snakeCaseToTitle } from "@/lib/utils";
@@ -101,6 +101,26 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
     }
   });
 
+  const generateTitle = trpc.video.generateTitle.useMutation({
+    onSuccess: () => {
+      toast.success("Title generation started", {description: "This may take some time"});
+    },
+    onError: () => {
+      toast.error("Error restoring thumbnail");
+    }
+  });
+
+  const generateDescription = trpc.video.generateDescription.useMutation({
+    onSuccess: () => {
+      toast.success("Description generation started", {
+        description: "This may take some time"
+      });
+    },
+    onError: () => {
+      toast.error("Error restoring thumbnail");
+    }
+  });
+
   const restoreThumbnail = trpc.video.restoreThumbnail.useMutation({
     onSuccess: () => {
       utils.studio.getMany.invalidate();
@@ -179,8 +199,23 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>
-                      Title
-                      {/* TODO: add AI Generate button */}
+                      <div className="flex items-center gap-x-2">
+                        Title
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          type="button"
+                          className="rounded-full size-6 [&_svg]:size-3"
+                          onClick={() => generateTitle.mutate({ id: videoId })}
+                          disabled={ generateTitle.isPending || !video.muxTrackId }
+                        >
+                          {generateTitle.isPending ? (
+                            <Loader2Icon className="animate-spin" />
+                          ) : (
+                            <SparklesIcon />
+                          )}
+                        </Button>
+                      </div>
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -197,7 +232,25 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Description</FormLabel>
+                    <FormLabel>
+                      <div className="flex items-center gap-x-2">
+                        Description
+                        <Button
+                          size="icon"
+                          variant="outline"
+                          type="button"
+                          className="rounded-full size-6 [&_svg]:size-3"
+                          onClick={() => generateDescription.mutate({ id: videoId })}
+                          disabled={ generateDescription.isPending || !video.muxTrackId }
+                        >
+                          {generateDescription.isPending ? (
+                            <Loader2Icon className="animate-spin" />
+                          ) : (
+                            <SparklesIcon />
+                          )}
+                        </Button>
+                      </div>
+                    </FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
