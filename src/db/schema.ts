@@ -10,8 +10,8 @@ import {
 import {
   createInsertSchema,
   createSelectSchema,
-  createUpdateSchema,
- } from "drizzle-zod";
+  createUpdateSchema
+} from "drizzle-zod";
 
 import { timestamps } from "./columns.helpers";
 
@@ -52,8 +52,10 @@ export const videos = pgTable("videos", {
   muxPlaybackId: text("mux_playback_id").unique(),
   muxTrackId: text("mux_track_id").unique(),
   muxTrackStatus: text("mux_track_status"),
+  thumbnailKey: text("thumbnail_key"),
   thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
   previewUrl: varchar("preview_url", { length: 255 }),
+  previewKey: text("preview_key"),
   duration: integer("duration"),
   visibility: videoVisibility("visibility").default("private").notNull(),
   userId: uuid("user_id")
