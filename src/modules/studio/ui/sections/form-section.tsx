@@ -44,6 +44,7 @@ import { THUMBNAIL_FALLBACK } from "@/modules/videos/constants";
 import { VideoPlayer } from "@/modules/videos/ui/components/video-player";
 
 import { ThumbnailUploadModal } from "../components/thumbnail-upload-modal";
+import { ThumbnailGenerateModal } from "../components/thumbnail-generate-modal";
   
 
 interface FormSectionProps {
@@ -75,6 +76,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
   const utils = trpc.useUtils();
 
   const [thumbanilModalOpen, setThumbnailModalOpen] = useState(false);
+  const [thumbnailGenerateModalOpen, setThumbnailGenerateModalOpen] = useState(false);
 
   const [video] = trpc.studio.getOne.useSuspenseQuery({ id: videoId })
   const [categories] = trpc.categories.getMany.useSuspenseQuery()
@@ -156,6 +158,11 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
 
   return (
     <>
+      <ThumbnailGenerateModal
+        open={thumbnailGenerateModalOpen}
+        onOpenChange={setThumbnailGenerateModalOpen}
+        videoId={videoId}
+      />
       <ThumbnailUploadModal
         open={thumbanilModalOpen}
         onOpenChange={setThumbnailModalOpen}
@@ -295,7 +302,7 @@ const FormSectionSuspense = ({ videoId }: FormSectionProps) => {
                               <ImagePlusIcon className="size-4 mr-1" />
                               Change
                             </DropdownMenuItem>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setThumbnailGenerateModalOpen(true)}>
                               <SparkleIcon className="size-4 mr-1" />
                               AI-generate
                             </DropdownMenuItem>
