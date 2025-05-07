@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { UserAvatar } from "@/components/user-avatar";
 
 import { UserInfo } from "@/modules/users/ui/components/user-info";
+import { useSubscription } from "@/modules/subscription/hooks/use-subscription";
 import { SubscriptionButton } from "@/modules/subscription/ui/components/subscription-button";
 
 import { VideoGetOneOutput } from "../../types";
@@ -16,6 +17,11 @@ interface VideoOwnerProps {
 
 export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
   const { userId: clerkUserId, isLoaded } = useAuth();
+  const { isPending, onClick } = useSubscription({
+    userId: user.id,
+    isSubscribed: user.viewerSubscribed,
+    fromVideoId: videoId
+  });
 
   return (
     <div className="flex items-center sm:items-start justify-between sm:justify-start gap-3 min-w-0">
@@ -25,8 +31,7 @@ export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
           <div className="flex flex-col gap-1 min-w-0">
             <UserInfo size="lg" name={user.name} />
             <span className="text-sm text-muted-foreground line-clamp-1">
-              {/* TODO: properly fill subscriber count */}
-              {0} subscribers
+              {user.subscriberCount} subscribers
             </span>
           </div>
         </div>
@@ -39,9 +44,9 @@ export const VideoOwner = ({ user, videoId }: VideoOwnerProps) => {
         </Button>
       ) : (
         <SubscriptionButton
-          onClick={() => {}}
-          disabled={false}
-          isSubscribed={false}
+          onClick={onClick}
+          disabled={isPending || !isLoaded}
+          isSubscribed={user.viewerSubscribed}
           className="flex-none"
         />
       )}
