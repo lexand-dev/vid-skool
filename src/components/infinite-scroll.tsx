@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
+import { Button } from "@/components/ui/button";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
-import { Button } from "./ui/button";
 
 interface InfiniteScrollProps {
   isManual?: boolean;
@@ -22,15 +22,15 @@ export const InfiniteScroll = ({
   });
 
   useEffect(() => {
-    if (!isManual && isIntersecting && hasNextPage && !isFetchingNextPage) {
+    if (isIntersecting && hasNextPage && !isFetchingNextPage && !isManual) {
       fetchNextPage();
     }
   }, [
     isIntersecting,
     hasNextPage,
     isFetchingNextPage,
-    fetchNextPage,
-    isManual
+    isManual,
+    fetchNextPage
   ]);
 
   return (
