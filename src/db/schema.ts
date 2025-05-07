@@ -1,4 +1,5 @@
 import {
+  foreignKey,
   integer,
   pgEnum,
   pgTable,
@@ -94,6 +95,35 @@ export const videos = pgTable("videos", {
 export const videoSelectSchema = createSelectSchema(videos);
 export const videoInsertSchema = createInsertSchema(videos);
 export const videoUpdateSchema = createUpdateSchema(videos);
+
+export const comments = pgTable(
+  "comments",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    parentId: uuid("parent_id"),
+    userId: uuid("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    videoId: uuid("video_id")
+      .references(() => videos.id, { onDelete: "cascade" })
+      .notNull(),
+    value: text("value").notNull(),
+    ...timestamps
+  },
+  (t) => {
+    return [
+      foreignKey({
+        columns: [t.parentId],
+        foreignColumns: [t.id],
+        name: "comments_parent_id_fkey"
+      })
+    ];
+  }
+);
+
+export const commentSelectSchema = createSelectSchema(comments);
+export const commentInsertSchema = createInsertSchema(comments);
+export const commentUpdateSchema = createUpdateSchema(comments);
 
 export const videoViews = pgTable(
   "video_views",
