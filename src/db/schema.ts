@@ -116,7 +116,7 @@ export const comments = pgTable(
         columns: [t.parentId],
         foreignColumns: [t.id],
         name: "comments_parent_id_fkey"
-      })
+      }).onDelete("cascade")
     ];
   }
 );
