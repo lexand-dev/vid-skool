@@ -2,6 +2,7 @@ import {
   integer,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   uniqueIndex,
   uuid,
@@ -72,3 +73,26 @@ export const videos = pgTable("videos", {
 export const videoSelectSchema = createSelectSchema(videos);
 export const videoInsertSchema = createInsertSchema(videos);
 export const videoUpdateSchema = createUpdateSchema(videos);
+
+export const videoViews = pgTable(
+  "video_views",
+  {
+    userId: uuid("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    videoId: uuid("video_id")
+      .references(() => videos.id, { onDelete: "cascade" })
+      .notNull(),
+    ...timestamps
+  },
+  (t) => [
+    primaryKey({
+      name: "video_views_pk",
+      columns: [t.userId, t.videoId]
+    })
+  ]
+);
+
+export const videoViewSelectSchema = createSelectSchema(videoViews);
+export const videoViewInsertSchema = createInsertSchema(videoViews);
+export const videoViewUpdateSchema = createUpdateSchema(videoViews);
