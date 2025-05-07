@@ -16,6 +16,8 @@ import {
 
 import { timestamps } from "./columns.helpers";
 
+export const reactionType = pgEnum("reaction_type", ["like", "dislike"]);
+
 export const users = pgTable(
   "users",
   {
@@ -96,3 +98,27 @@ export const videoViews = pgTable(
 export const videoViewSelectSchema = createSelectSchema(videoViews);
 export const videoViewInsertSchema = createInsertSchema(videoViews);
 export const videoViewUpdateSchema = createUpdateSchema(videoViews);
+
+export const videoReactions = pgTable(
+  "video_reactions",
+  {
+    userId: uuid("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    videoId: uuid("video_id")
+      .references(() => videos.id, { onDelete: "cascade" })
+      .notNull(),
+    type: reactionType("type").notNull(),
+    ...timestamps
+  },
+  (t) => [
+    primaryKey({
+      name: "video_reactions_pk",
+      columns: [t.userId, t.videoId]
+    })
+  ]
+);
+
+export const videoReactionSelectSchema = createSelectSchema(videoReactions);
+export const videoReactionInsertSchema = createInsertSchema(videoReactions);
+export const videoReactionUpdateSchema = createUpdateSchema(videoReactions);
