@@ -79,7 +79,7 @@ export const videos = pgTable("videos", {
   thumbnailUrl: varchar("thumbnail_url", { length: 255 }),
   previewUrl: varchar("preview_url", { length: 255 }),
   previewKey: text("preview_key"),
-  duration: integer("duration"),
+  duration: integer("duration").default(0).notNull(),
   visibility: videoVisibility("visibility").default("private").notNull(),
   userId: uuid("user_id")
     .references(() => users.id, {
