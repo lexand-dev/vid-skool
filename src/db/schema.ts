@@ -125,6 +125,26 @@ export const commentSelectSchema = createSelectSchema(comments);
 export const commentInsertSchema = createInsertSchema(comments);
 export const commentUpdateSchema = createUpdateSchema(comments);
 
+export const commentReactions = pgTable(
+  "comment_reactions",
+  {
+    userId: uuid("user_id")
+      .references(() => users.id, { onDelete: "cascade" })
+      .notNull(),
+    commentId: uuid("comment_id")
+      .references(() => comments.id, { onDelete: "cascade" })
+      .notNull(),
+    type: reactionType("type").notNull(),
+    ...timestamps
+  },
+  (t) => [
+    primaryKey({
+      name: "comment_reactions_pk",
+      columns: [t.userId, t.commentId]
+    })
+  ]
+);
+
 export const videoViews = pgTable(
   "video_views",
   {
