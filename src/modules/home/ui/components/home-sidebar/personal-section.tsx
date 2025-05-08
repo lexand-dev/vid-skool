@@ -17,19 +17,19 @@ import {
 const items = [
   {
     title: "History",
-    url: "/playlist/history",
+    url: "/playlists/history",
     icon: HistoryIcon,
     auth: true
   },
   {
     title: "Like Videos",
-    url: "/playlist/liked",
+    url: "/playlists/liked",
     icon: ThumbsUpIcon,
     auth: true
   },
   {
     title: "All Playlists",
-    url: "/playlist",
+    url: "/playlists",
     icon: ListVideoIcon,
     auth: true
   }
