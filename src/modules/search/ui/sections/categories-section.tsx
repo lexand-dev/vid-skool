@@ -34,6 +34,7 @@ const CategoriesSectionSuspense = ({ categoryId }: CategoriesSectionProps) => {
     value: category.id,
     label: category.name
   }));
+  console.log("categories", data);
 
   const onSelect = (value: string | null) => {
     const url = new URL("/search", APP_URL);
