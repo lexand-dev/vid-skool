@@ -130,8 +130,12 @@ const VideoSectionSuspense = () => {
                           />
                         </div>
                         <div className="flex flex-col overflow-hidden gap-y-2">
-                          <span className="text-sm line-clamp-1">{video.title}</span>
-                          <span className="text-xs text-muted-foreground line-clamp-1">{video.description || "No description"}</span>
+                          <span className="text-sm line-clamp-1">
+                            {video.title}
+                          </span>
+                          <span className="text-xs text-muted-foreground line-clamp-1">
+                            {video.description || "No description"}
+                          </span>
                         </div>
                       </div>
                     </TableCell>
@@ -153,9 +157,15 @@ const VideoSectionSuspense = () => {
                     <TableCell>
                       {format(video.createdAt, "MMM dd, yyyy")}
                     </TableCell>
-                    <TableCell className="text-right">views</TableCell>
-                    <TableCell className="text-right">comments</TableCell>
-                    <TableCell className="text-right pr-6">likes</TableCell>
+                    <TableCell className="text-right">
+                      {video.viewCount}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {video.commentCount}
+                    </TableCell>
+                    <TableCell className="text-right pr-6">
+                      {video.likeCount}
+                    </TableCell>
                   </TableRow>
                 </Link>
               ))}
