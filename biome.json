@@ -21,11 +21,14 @@
 		"rules": {
 			"recommended": true,
 			"style": {
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"useImportType": "off",
+				"useSelfClosingElements": "off"
 			},
 			"suspicious": {
 				"noAssignInExpressions": "off",
-				"noArrayIndexKey": "warn"
+				"noArrayIndexKey": "off",
+				"noImplicitAnyLet": "warn"
 			}
 		}
 	},
