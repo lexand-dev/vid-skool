@@ -54,6 +54,8 @@ export const users = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     clerkId: varchar("clerk_id", { length: 255 }).unique().notNull(),
     name: varchar("name", { length: 255 }).notNull(),
+    bannerUrl: text("banner_url"),
+    bannerKey: text("banner_key"),
     imageUrl: varchar("image_url", { length: 255 }).notNull(),
     ...timestamps
   },
