@@ -1,4 +1,5 @@
 import { toast } from "sonner";
+import { useState } from "react";
 import {
   ListPlusIcon,
   MoreVerticalIcon,
@@ -14,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
+import { PlaylistAddModal } from "@/modules/playlists/ui/components/playlist-add-modal";
 
 interface VideoMenuProps {
   videoId: string;
@@ -21,12 +23,13 @@ interface VideoMenuProps {
   onRemove?: () => void;
 }
 
-// TODO: Add to playlist functionality
 export const VideoMenu = ({
   videoId,
   variant = "ghost",
   onRemove
 }: VideoMenuProps) => {
+  const [isOpenPlaylistAddModal, setIsOpenPlaylistAddModal] = useState(false);
+
   const onShare = () => {
     const fullUrl = `${APP_URL}/videos/${videoId}`;
     navigator.clipboard.writeText(fullUrl);
@@ -35,6 +38,11 @@ export const VideoMenu = ({
 
   return (
     <>
+      <PlaylistAddModal
+        videoId={videoId}
+        open={isOpenPlaylistAddModal}
+        onOpenChange={setIsOpenPlaylistAddModal}
+      />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant={variant} size="icon" className="rounded-full">
@@ -46,7 +54,7 @@ export const VideoMenu = ({
             <ShareIcon className="mr-2 size-4" />
             Share
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => {}}>
+          <DropdownMenuItem onClick={() => setIsOpenPlaylistAddModal(true)}>
             <ListPlusIcon className="mr-2 size-4" />
             Add to playlist
           </DropdownMenuItem>
