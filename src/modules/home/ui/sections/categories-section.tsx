@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { ErrorBoundary } from "react-error-boundary";
 
 import { trpc } from "@/trpc/client";
-import { APP_URL } from "@/constants";
 import { FilterCarousel } from "@/components/filter-carousel";
 
 interface CategoriesSectionProps {
@@ -36,7 +35,7 @@ const CategoriesSectionSuspense = ({ categoryId }: CategoriesSectionProps) => {
   }));
 
   const onSelect = (value: string | null) => {
-    const url = new URL("/search", APP_URL);
+    const url = new URL(window.location.href);
 
     if (value) {
       url.searchParams.set("categoryId", value);
