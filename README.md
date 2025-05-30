@@ -1,6 +1,12 @@
-# VID-SKOOL - Plataforma de Aprendizaje de Idiomas con Video
+# VID-SKOOL - Plataforma de Video Content
 
-Este proyecto es una aplicación [Next.js](https://nextjs.org) para el aprendizaje de idiomas basado en videos, con características específicas para "English Speaking Club".
+Este proyecto es una aplicación [Next.js](https://nextjs.org) para el aprendizaje de idiomas basado en videos, para "English Speaking Club".
+![image](https://github.com/user-attachments/assets/b853747d-791c-4262-a0ec-e3667460b594)
+![image](https://github.com/user-attachments/assets/39162391-b8be-4aa1-829d-7865e7038351)
+![image](https://github.com/user-attachments/assets/772c0f61-c25e-4694-88a9-650801b24ede)
+
+
+
 
 ## Características Principales
 
